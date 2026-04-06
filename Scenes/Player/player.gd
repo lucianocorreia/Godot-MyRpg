@@ -1,16 +1,28 @@
 class_name Player extends CharacterBody2D
 
+@export_group("Stats")
 @export var max_health: float = 10.0
 @export var max_mana: float = 10.0
-@export var move_speed: float = 10.0
-@export var damage: float = 10.0
-@export var crit_chance: float = 10.0
-@export var crit_damage: float = 10.0
+@export var move_speed: float = 60.0
+@export var damage: float = 5.0
+@export var crit_chance: float = 0.0
+@export var crit_damage: float = 0.0
+
+@export_group("Experience")
+@export var base_exp: float = 100.0
+@export var exp_multiplier: float = 2.0
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var health_component: HealthComponent = $HealthComponent
 @onready var fsm: StateMachine = $FSM
 
 var last_direction: String = "down"
+var current_mana: float = 0.0
+var current_exp: float = 0.0
+var next_level_exp: float = 0.0
+
+var current_level: int = 1
+var current_points: int = 0
 
 
 func _process(delta: float):
@@ -18,19 +30,9 @@ func _process(delta: float):
 
 
 func setup() -> void:
-# Initializes the player's runtime state. This should be called once when the player
-# is created or when the player is respawned.
-#
-# What it does:
-# - Resets the player's health to max and emits a health update event.
-# - Resets the player's mana to max and emits a mana update event.
-#
-# Additional initialization (animation, FSM start, inventory, etc.) can be added here.
-# Reset health and notify listeners via EventBus
-reset_health()
-# Reset mana and notify listeners via EventBus
-reset_mana()
-
+	reset_health()
+	reset_mana()
+	next_level_exp = base_exp
 
 
 func reset_health() -> void:
@@ -46,6 +48,22 @@ func reset_mana() -> void:
 func use_mana(value: float) -> void:
 	current_mana -= max(current_mana - value, 0)
 	EventBus.on_player_mana_updated.emit(current_mana, max_mana)
+
+
+func add_exp(value: float) -> void:
+	current_exp += value
+	while current_exp >= next_level_exp:
+		level_up()
+
+	EventBus.on_player_new_level.emit(current_exp, next_level_exp)
+
+
+func level_up() -> void:
+	current_exp -= next_level_exp
+	current_level += 1
+	current_points += 4
+	next_level_exp *= exp_multiplier
+	EventBus.on_player_stats_updated.emit()
 
 
 func is__moving() -> bool:
