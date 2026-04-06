@@ -4,6 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://l58lkiu042xv" path="res://Assets/Sprites/Actor/Characters/Shadow.png" id="2_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://cc0q6egjxfobw" path="res://Assets/Sprites/Actor/Characters/Boy/SeparateAnim/Idle.png" id="3_xpcdj"]
 [ext_resource type="Texture2D" uid="uid://bacld8ysircpa" path="res://Assets/Sprites/Actor/Characters/Boy/SeparateAnim/Walk.png" id="4_mtuoh"]
+[ext_resource type="Script" uid="uid://tqbd3mulokpp" path="res://Scenes/Player/FSM/player_state_idle.gd" id="5_0u5uq"]
+[ext_resource type="Script" uid="uid://d38sshd3q37ki" path="res://Scripts/state_machine.gd" id="5_jlvik"]
+[ext_resource type="Script" uid="uid://ch5i258g4h6wa" path="res://Scenes/Player/FSM/player_state_walk.gd" id="6_jlvik"]
+[ext_resource type="Script" uid="uid://cr6ktjly6ajcp" path="res://Scenes/Player/FSM/player_state_attack.gd" id="7_gk6dx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mtuoh"]
 atlas = ExtResource("3_xpcdj")
@@ -205,3 +209,17 @@ autoplay = "idle_down"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1860831635]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1139069442]
+zoom = Vector2(3, 3)
+
+[node name="FSM" type="Node" parent="." unique_id=1932318922 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("5_jlvik")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="FSM" unique_id=2000757280]
+script = ExtResource("5_0u5uq")
+
+[node name="Walk" type="Node" parent="FSM" unique_id=461007971]
+script = ExtResource("6_jlvik")
+
+[node name="Attack" type="Node" parent="FSM" unique_id=2063597395]
+script = ExtResource("7_gk6dx")

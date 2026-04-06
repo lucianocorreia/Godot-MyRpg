@@ -1,4 +1,17 @@
 root = true
 
 [*]
+end_of_line = lf
 charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = false
+
+# Prefer trimming for data/config formats where trailing whitespace is rarely desired
+[*.{json,yml,yaml,md}]
+trim_trailing_whitespace = true
+
+# GDScript: use tabs
+[*.gd]
+indent_style = tab
+indent_size = tab
+tab_width = 4
