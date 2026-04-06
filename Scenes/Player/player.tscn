@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cc0q6egjxfobw" path="res://Assets/Sprites/Actor/Characters/Boy/SeparateAnim/Idle.png" id="3_xpcdj"]
 [ext_resource type="Texture2D" uid="uid://bacld8ysircpa" path="res://Assets/Sprites/Actor/Characters/Boy/SeparateAnim/Walk.png" id="4_mtuoh"]
 [ext_resource type="Script" uid="uid://tqbd3mulokpp" path="res://Scenes/Player/FSM/player_state_idle.gd" id="5_0u5uq"]
+[ext_resource type="PackedScene" uid="uid://du1o6ro1s8i8b" path="res://Scenes/Components/health_component.tscn" id="5_gk6dx"]
 [ext_resource type="Script" uid="uid://d38sshd3q37ki" path="res://Scripts/state_machine.gd" id="5_jlvik"]
 [ext_resource type="Script" uid="uid://ch5i258g4h6wa" path="res://Scenes/Player/FSM/player_state_walk.gd" id="6_jlvik"]
 [ext_resource type="Script" uid="uid://cr6ktjly6ajcp" path="res://Scenes/Player/FSM/player_state_attack.gd" id="7_gk6dx"]
@@ -210,6 +211,8 @@ autoplay = "idle_down"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1139069442]
 zoom = Vector2(3, 3)
+
+[node name="HealthComponent" parent="." unique_id=1912659294 instance=ExtResource("5_gk6dx")]
 
 [node name="FSM" type="Node" parent="." unique_id=1932318922 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("5_jlvik")

@@ -18,3 +18,7 @@ func take_damage(value: float) -> void:
 		return
 
 	current_health -= max(current_health - value, 0)
+	on_health_changed.emit(current_health)
+
+	if current_health <= 0:
+		on_dead.emit()
