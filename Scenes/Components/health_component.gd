@@ -1,0 +1,20 @@
+class_name HealthComponent
+extends Node
+
+signal on_health_changed(curr: float)
+signal on_dead
+
+var max_health: float
+var current_health: float
+
+
+func setup(value: float) -> void:
+	max_health = value
+	current_health = value
+
+
+func take_damage(value: float) -> void:
+	if current_health <= 0:
+		return
+
+	current_health -= max(current_health - value, 0)
